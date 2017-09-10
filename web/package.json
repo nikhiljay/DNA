@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app": "^0.1.0",
+    "bionode-ncbi": "^2.0.1",
+    "bionode-seq": "^0.1.1",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "http": "0.0.0",
+    "io": "^0.1.10",
+    "ngrok": "^2.2.21",
+    "socket.io": "^2.0.3",
+    "tesseract.js": "^1.0.7"
+  }
+}

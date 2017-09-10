@@ -1,0 +1,7 @@
+platform :ios, '11.0'
+use_frameworks!
+
+target 'DNA' do
+    	pod 'Alamofire', '~> 4.4'
+	pod 'TesseractOCRiOS', '4.0.0'
+end
