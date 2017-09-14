@@ -26,7 +26,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var imagePicker = UIImagePickerController()
     
     var pickerData = ["Complement", "Transcribe", "Translate", "Reverse"]
-    var url = "http://192.168.11.25:8000"
+    var url = "http://104.131.156.241"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,33 +38,38 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func getData() {
-        self.outputTextView.text = ""
-        
-        let parameters: Parameters = [
-            "strand": sequenceTextField.text ?? "",
-            "method": pickerData[methodPickerView.selectedRow(inComponent: 0)]
-        ]
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-        
-        Alamofire.request(url).responseJSON { response in
-            if let json = response.result.value {
-                for data in json as! [String: AnyObject] {
-                    if self.methodPickerView.selectedRow(inComponent: 0) == 2 { //if translate
-                        let output = data.value as! String
-                        for i in 0...output.characters.count-1 {
-                            let protein = getProtein(abbreviation: output.charAt(at: i)) //convert char to protein
-                            if i == output.count-1 {
-                                self.outputTextView.text = self.outputTextView.text.appendingFormat(protein)
-                            } else {
-                                self.outputTextView.text = self.outputTextView.text.appendingFormat(protein + "-")
+        var k = 1
+        while k <= 5 {
+            self.outputTextView.text = ""
+            
+            let parameters: Parameters = [
+                "strand": sequenceTextField.text ?? "",
+                "method": pickerData[methodPickerView.selectedRow(inComponent: 0)]
+            ]
+            
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            
+            Alamofire.request(url).responseJSON { response in
+                if let json = response.result.value {
+                    for data in json as! [String: AnyObject] {
+                        if self.methodPickerView.selectedRow(inComponent: 0) == 2 { //if translate
+                            let output = data.value as! String
+                            for i in 0...output.characters.count-1 {
+                                self.outputTextView.text = ""
+                                let protein = getProtein(abbreviation: output.charAt(at: i)) //convert char to protein
+                                if i == output.count-1 {
+                                    self.outputTextView.text = self.outputTextView.text.appendingFormat(protein)
+                                } else {
+                                    self.outputTextView.text = self.outputTextView.text.appendingFormat(protein + "-")
+                                }
                             }
+                        } else {
+                            self.outputTextView.text = "\(data.value)"
                         }
-                    } else {
-                        self.outputTextView.text = "\(data.value)"
                     }
                 }
             }
+            k = k + 1
         }
     }
     
