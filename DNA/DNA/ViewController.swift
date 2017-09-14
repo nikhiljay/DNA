@@ -54,8 +54,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     for data in json as! [String: AnyObject] {
                         if self.methodPickerView.selectedRow(inComponent: 0) == 2 { //if translate
                             let output = data.value as! String
+                            self.outputTextView.text = ""
                             for i in 0...output.characters.count-1 {
-                                self.outputTextView.text = ""
                                 let protein = getProtein(abbreviation: output.charAt(at: i)) //convert char to protein
                                 if i == output.count-1 {
                                     self.outputTextView.text = self.outputTextView.text.appendingFormat(protein)
