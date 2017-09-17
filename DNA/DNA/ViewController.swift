@@ -26,7 +26,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var imagePicker = UIImagePickerController()
     
     var pickerData = ["Complement", "Transcribe", "Translate", "Reverse"]
-    var url = "http://104.131.156.241"
+    var url = "http://192.168.11.25:8000/data" //DigitalOcean = 104.131.156.241
     
     override func viewDidLoad() {
         super.viewDidLoad()

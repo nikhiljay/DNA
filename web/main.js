@@ -3,9 +3,8 @@ var Tesseract = require('tesseract.js')
 var ncbi = require('bionode-ncbi')
 var seq = require('bionode-seq')
 var ngrok = require('ngrok')
-var express = require('express');
 var bodyParser = require('body-parser');
-var app = express();
+var app = require('express')();
 
 // var image = path.resolve(__dirname, 'text.png');
 var inputStrand = ""
@@ -13,10 +12,10 @@ var method = ""
 
 app.use(bodyParser.json())
 
-app.post('/', function (request, response) {
-    response.send(request.body);
+app.post('/data', function(req, res) {
+    res.send(req.body);
 
-    var data = request.body //get data from app
+    var data = req.body //get data from app
     inputStrand = data['strand']
     method = data['method']
     console.log("-------------")
@@ -24,19 +23,11 @@ app.post('/', function (request, response) {
     console.log("method: " + method)
 });
 
-app.get('/', function (request, response) {
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/index.html');
+})
 
-    // ncbi.search('taxonomy', 'solenopsis invicta').on('data', function(data) {
-    //   var output = data
-    //   response.send(output);
-    // })
-
-    // Tesseract.recognize(image)
-    //   .then(function(result) {
-    //     var complement = {"strand": seq.complement(result.text)}
-    //     response.send(complement)
-    //   })
-
+app.get('/data', function(req, res) {
     var outputStrand = {"strand": seq.complement(inputStrand)}
 
     switch(method) {
@@ -55,7 +46,7 @@ app.get('/', function (request, response) {
     }
 
     console.log("output strand: " + outputStrand['strand'])
-    response.send(outputStrand) //send data to app
+    res.send(outputStrand) //send data to app
 });
 
 app.listen(8000);
