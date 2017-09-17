@@ -1,13 +1,24 @@
 <!doctype html>
 <html>
-  <head>
-    <title>DNA</title>
-  </head>
-  <body>
-    <h1 id="text">strand</h1>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-      document.getElementById("text").innerHTML = "yourTextHere";
-    </script>
-  </body>
+
+<head>
+  <title>DNA</title>
+</head>
+
+<body>
+  <h1 id="title">Output Strand</h1>
+  <p id="body">Strand goes here</p>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script>
+    $(function() {
+      var socket = io();
+      socket.on('webStrand', function(data) {
+        console.log(data)
+        document.getElementById("body").innerHTML = data['outputStrand'];
+      })
+    });
+  </script>
+</body>
+
 </html>
